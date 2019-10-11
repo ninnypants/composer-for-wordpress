@@ -1,0 +1,57 @@
+{
+    "name": "ninnypants/cwp",
+    "description": "WordPress + Composer example.",
+    "type": "project",
+    "license": "GPL2",
+    "authors": [
+        {
+            "name": "Tyrel Kelsey",
+            "email": "tyrel@ninnypants.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "repositories":[
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:ninnypants/cwp-theme.git",
+            "no-api": true
+        },
+       {
+           "type": "artifact",
+           "url": "artifacts/"
+       }
+    ],
+    "require": {
+        "wpackagist-plugin/formidable": ">=4.03",
+        "wpackagist-plugin/wordpress-seo": ">=12.2",
+        "ninnypants/cwp-theme": "dev-master",
+        "strategy11/formidable-pro": "4.02.03"
+    },
+    "extra": {
+        "installer-paths": {
+            "plugins/{$name}":[ "type:wordpress-plugin" ],
+            "mu-plugins/{$name}": [ "type:wordpress-muplugin" ],
+            "themes/{$name}": [ "type:wordpress-theme" ]
+        }
+    },
+"scripts": {
+    "start": [
+        "@composer install",
+        "cd mu-plugins && npm install && bower install && grunt",
+        "cd themes/cwp-theme && npm install && grunt"
+    ],
+    "deploy": [
+        "@composer install --no-dev --optimize-autoloader",
+        "cd mu-plugins && npm install && bower install && grunt",
+        "cd themes/cwp-theme && npm install && grunt"
+    ]
+},
+"scripts-descriptions": {
+    "start": "Initializes repo for development.",
+    "deploy": "Prepares the repo for deployment. Installs with --no-dev and optimizes output etc."
+}
+}
